@@ -29,9 +29,16 @@ class Question extends Component {
     return optionList;
   }
   render() {
+    var parentcard = {
+      background: "white"
+    };
     return (
-      <div>
-        <h2>{this.state.label}</h2>
+      <div className="card" id="parent-card" style={parentcard}>
+        <div className="card-header">
+          <ul className="list-group list-group-flush">
+            <li>{this.state.label}</li>
+          </ul>
+        </div>
         {this.renderOptions()}
       </div>
     );
@@ -41,10 +48,15 @@ class Question extends Component {
 function Option(props) {
   return (
     <div>
-      <span onClick={props.onClick}>
-        <i class="fas fa-caret-right" />
-        <span>{props.label}</span>
-      </span>
+      <div className="card-custom">
+        <ul className="list-group list-group-flush">
+          <li>
+            <span onClick={props.onClick}>
+              <span>{props.label}</span>
+            </span>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 }

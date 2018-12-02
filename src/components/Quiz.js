@@ -29,6 +29,10 @@ class Quiz extends Component {
   }
   render() {
     let content;
+    var parentcard = {
+      background: "#388ac1"
+    };
+
     for (let i = 0, len = this.state.questions.length; i < len; i++) {
       let question = this.state.questions[i];
 
@@ -40,15 +44,19 @@ class Quiz extends Component {
           questionCount = this.state.questions.length;
         content = (
           <div>
-            <Question
-              key={i}
-              index={i}
-              options={question.options}
-              label={question.label}
-              onSelect={this.onSelect}
-            />
-            <div>
-              {questionNumber} / {questionCount}
+            <div className="card" style={parentcard}>
+              <div className="card-body">
+                <Question
+                  key={i}
+                  index={i}
+                  options={question.options}
+                  label={question.label}
+                  onSelect={this.onSelect}
+                />
+                <div className="pagenumber">
+                  {questionNumber} / {questionCount}
+                </div>
+              </div>
             </div>
           </div>
         );

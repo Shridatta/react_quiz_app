@@ -17,15 +17,19 @@ class Summary extends Component {
     return this.state.data.map((question, index) => {
       let questionNumber = index + 1;
       return (
-        <li key={index}>
-          <div>
-            <span>
-              <em>{questionNumber})</em> {question.label}
-            </span>
-            <br />
-            <span>{question.options[question.user_answer].label}</span>
-          </div>
-        </li>
+        <div className="card">
+          <ul className="list-group list-group-flush">
+            <li key={index}>
+              <div>
+                <span>
+                  <em>{questionNumber})</em> {question.label}
+                </span>
+                <br />
+                <span>{question.options[question.user_answer].label}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
       );
     });
   }
@@ -38,16 +42,30 @@ class Summary extends Component {
     return total;
   }
   render() {
+    var buttonstyle = {
+      float: "right"
+    };
     return (
-      <div>
-        <h1>Congrats!</h1>
-        <div>
-          <p>
-            Total Correct Answers:- <span>{this.calculateTotalMarks()}</span>
-          </p>
+      <div className="card">
+        <div className="card-body">
+          <div className="card-header">
+            <h1>End of Quiz!!!</h1>
+          </div>
+          <br />
+          <div>
+            <p>
+              Total Correct Answers:- <span>{this.calculateTotalMarks()}</span>
+            </p>
+          </div>
+          <div>Your Answers : {this.displayAnswers()}</div>
+          <button
+            className="btn btn-primary"
+            onClick={this.reset}
+            style={buttonstyle}
+          >
+            Start Over
+          </button>
         </div>
-        <ul>{this.displayAnswers()}</ul>
-        <button onClick={this.reset}>Start Over</button>
       </div>
     );
   }
