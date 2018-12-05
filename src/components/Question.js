@@ -30,7 +30,8 @@ class Question extends Component {
   }
   render() {
     var parentcard = {
-      background: "white"
+      background: "white",
+      color: "black"
     };
     return (
       <div className="card" id="parent-card" style={parentcard}>

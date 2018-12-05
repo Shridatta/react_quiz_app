@@ -2,6 +2,13 @@ import React, { Component } from "react";
 import config from "../quiz-data.json";
 import Question from "./Question";
 import Summary from "./Summary";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import { createMuiTheme } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 
 class Quiz extends Component {
   constructor(props) {
@@ -33,6 +40,22 @@ class Quiz extends Component {
       background: "#388ac1"
     };
 
+    const style = {
+      bg: {
+        backgroundColor: "teal",
+        color: "white"
+      },
+      h2: {
+        color: "white"
+      },
+      h5: {
+        color: "white"
+      }
+    };
+
+    const headerstyle = {
+      color: "white"
+    };
     for (let i = 0, len = this.state.questions.length; i < len; i++) {
       let question = this.state.questions[i];
 
@@ -44,8 +67,15 @@ class Quiz extends Component {
           questionCount = this.state.questions.length;
         content = (
           <div>
-            <div className="card" style={parentcard}>
-              <div className="card-body">
+            <Card style={style.bg}>
+              <CardContent>
+                <Typography>
+                  <h5 style={headerstyle} className="headerqno">
+                    Question Number :- {questionNumber}
+                  </h5>
+                </Typography>
+              </CardContent>
+              <CardActions>
                 <Question
                   key={i}
                   index={i}
@@ -53,11 +83,9 @@ class Quiz extends Component {
                   label={question.label}
                   onSelect={this.onSelect}
                 />
-                <div className="pagenumber">
-                  {questionNumber} / {questionCount}
-                </div>
-              </div>
-            </div>
+                <br />
+              </CardActions>
+            </Card>
           </div>
         );
 
