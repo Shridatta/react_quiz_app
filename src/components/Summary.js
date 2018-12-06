@@ -46,25 +46,28 @@ class Summary extends Component {
       float: "right"
     };
     return (
-      <div className="card">
-        <div className="card-body">
-          <div className="card-header">
-            <h1>End of Quiz!!!</h1>
+      <div className="parentsummary">
+        <div className="card">
+          <div className="card-body">
+            <div className="card-header">
+              <h1>End of Quiz!!!</h1>
+            </div>
+            <br />
+            <div>
+              <p>
+                Total Correct Answers:-{" "}
+                <span>{this.calculateTotalMarks()}</span>
+              </p>
+            </div>
+            <div>Your Answers : {this.displayAnswers()}</div>
+            <button
+              className="btn btn-primary"
+              onClick={this.reset}
+              style={buttonstyle}
+            >
+              Start Over
+            </button>
           </div>
-          <br />
-          <div>
-            <p>
-              Total Correct Answers:- <span>{this.calculateTotalMarks()}</span>
-            </p>
-          </div>
-          <div>Your Answers : {this.displayAnswers()}</div>
-          <button
-            className="btn btn-primary"
-            onClick={this.reset}
-            style={buttonstyle}
-          >
-            Start Over
-          </button>
         </div>
       </div>
     );

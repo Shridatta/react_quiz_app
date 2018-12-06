@@ -21,6 +21,7 @@ class Quiz extends Component {
 
   initialize() {
     const questions = this.state.questions.slice();
+
     questions.map(question => {
       return (question.user_answer = null);
     });
@@ -101,7 +102,7 @@ class Quiz extends Component {
         />
       );
     }
-    return <div>{content}</div>;
+    return <div className="parentsummary">{content}</div>;
   }
 }
 
