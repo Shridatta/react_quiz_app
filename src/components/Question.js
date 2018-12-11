@@ -1,21 +1,22 @@
 import React, { Component } from "react";
-import config from "../quiz-data.json";
+import "../index.css";
 
 class Question extends Component {
-  constructor(props) {
-    super();
-    this.state = {
-      index: props.index,
-      label: props.label,
-      options: props.options,
-      onSelect: props.onSelect
-    };
+  onSelect(questionIndex, optionIndex) {
+    const questions = this.props.questions.slice();
+    questions[questionIndex].user_answer = optionIndex;
+    this.props.answerTheQuestion(questionIndex);
+    this.props.updateQuestions(questions);
   }
+
   handleClick(option) {
-    this.state.onSelect(this.state.index, option);
+    this.onSelect(this.props.currentQuestion, option);
+    this.props.goToNextQuestion();
   }
   renderOptions() {
-    const optionList = this.state.options.map((option, index) => {
+    const optionList = this.props.questions[
+      this.props.currentQuestion
+    ].options.map((option, index) => {
       return (
         <Option
           key={index}
@@ -37,7 +38,7 @@ class Question extends Component {
       <div className="card" id="parent-card" style={parentcard}>
         <div className="card-header">
           <ul className="list-group list-group-flush">
-            <li>{this.state.label}</li>
+            <li>{this.props.questions[this.props.currentQuestion].label}</li>
           </ul>
         </div>
         {this.renderOptions()}

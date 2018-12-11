@@ -1,20 +1,11 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { isSummaryShown, startOverHandleChange } from "../actions/index";
+import Redirect from "react-router-dom/es/Redirect";
 
 class Summary extends Component {
-  constructor(props) {
-    super();
-    this.state = {
-      data: props.questions,
-      totalmarks: props.totalmarks,
-      reset: props.reset
-    };
-    this.reset = this.reset.bind(this);
-  }
-  reset() {
-    this.state.reset();
-  }
   displayAnswers() {
-    return this.state.data.map((question, index) => {
+    return this.props.questions.map((question, index) => {
       let questionNumber = index + 1;
       return (
         <div className="card">
@@ -35,13 +26,22 @@ class Summary extends Component {
   }
   calculateTotalMarks() {
     let total = 0;
-    for (let i = 0, len = this.state.data.length; i < len; i++) {
-      let question = this.state.data[i];
+    for (let i = 0, len = this.props.questions.length; i < len; i++) {
+      let question = this.props.questions[i];
       total += question.options[question.user_answer].value;
     }
     return total;
   }
+
+  startOver() {
+    this.props.isSummaryShown();
+    this.props.startOverHandleChange();
+  }
+
   render() {
+    if (this.props.isStartedOver === true && this.props.isSummaryShown === true)
+      return <Redirect to={"/"} />;
+
     var buttonstyle = {
       float: "right"
     };
@@ -60,13 +60,15 @@ class Summary extends Component {
               </p>
             </div>
             <div>Your Answers : {this.displayAnswers()}</div>
-            <button
-              className="btn btn-primary"
-              onClick={this.reset}
-              style={buttonstyle}
-            >
-              Start Over
-            </button>
+            <Link onClick={() => this.startOver()} to={"/"}>
+              <button
+                className="btn btn-primary"
+                onClick={() => this.props.startOver()}
+                style={buttonstyle}
+              >
+                Start Over
+              </button>
+            </Link>
           </div>
         </div>
       </div>

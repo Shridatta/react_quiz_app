@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import config from "../quiz-data.json";
 import Question from "./Question";
 import Summary from "./Summary";
 import Card from "@material-ui/core/Card";
@@ -9,32 +8,12 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
+import { goToPrevQuestion, initializeQuestions } from "../actions";
+import { Redirect } from "react-router-dom";
+import SummaryContainer from "../containers/SummaryContainer";
+import QuestionContainer from "../containers/QuestionContianer";
 
 class Quiz extends Component {
-  constructor(props) {
-    super();
-    this.state = config; // the loaded json data.
-
-    this.onSelect = this.onSelect.bind(this);
-    this.initialize = this.initialize.bind(this);
-  }
-
-  initialize() {
-    const questions = this.state.questions.slice();
-
-    questions.map(question => {
-      return (question.user_answer = null);
-    });
-    this.setState({ questions: questions });
-  }
-
-  onSelect(questionIndex, optionIndex) {
-    const questions = this.state.questions.slice();
-    questions[questionIndex].user_answer = optionIndex;
-    this.setState({
-      questions: questions
-    });
-  }
   render() {
     let content;
     var parentcard = {
@@ -57,51 +36,47 @@ class Quiz extends Component {
     const headerstyle = {
       color: "white"
     };
-    for (let i = 0, len = this.state.questions.length; i < len; i++) {
-      let question = this.state.questions[i];
 
-      if (
-        typeof question.user_answer === "undefined" ||
-        question.user_answer === null
-      ) {
-        let questionNumber = i + 1,
-          questionCount = this.state.questions.length;
-        content = (
-          <div>
-            <Card style={style.bg}>
-              <CardContent>
-                <Typography>
-                  <h5 style={headerstyle} className="headerqno">
-                    Question Number :- {questionNumber}
-                  </h5>
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Question
-                  key={i}
-                  index={i}
-                  options={question.options}
-                  label={question.label}
-                  onSelect={this.onSelect}
-                />
-                <br />
-              </CardActions>
-            </Card>
-          </div>
-        );
+    content = (
+      <div>
+        <Card style={style.bg}>
+          <CardContent>
+            <Typography>
+              <h5 style={headerstyle} className="headerqno">
+                Question Number :- {this.props.currentQuestion + 1}
+              </h5>
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <QuestionContainer />
+            <br />
+          </CardActions>
+        </Card>
 
-        break;
-      }
+        <div className="buttonsparent">
+          <button
+            className="buttonnext btn btn-primary"
+            onClick={() => this.props.goToNextQuestion()}
+          >
+            Next
+          </button>
+          <button
+            className="buttonprev btn btn-primary"
+            onClick={() => this.props.goToPrevQuestion()}
+          >
+            Prev
+          </button>
+        </div>
+      </div>
+    );
+
+    if (
+      this.props.currentQuestion + 1 === this.props.questions.length &&
+      this.props.answeredQuestions.length === this.props.questions.length
+    ) {
+      return <Redirect to={"/summary"} />;
     }
-    if (!content) {
-      content = (
-        <Summary
-          questions={this.state.questions}
-          reset={this.initialize}
-          totalmarks={this.state.totalmarks}
-        />
-      );
-    }
+
     return <div className="parentsummary">{content}</div>;
   }
 }

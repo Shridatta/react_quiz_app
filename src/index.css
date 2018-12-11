@@ -9,6 +9,10 @@ body {
   height: 50px;
 }
 
+.card-header {
+  height: 63px;
+}
+
 .navbar-brand {
   color: white;
 }
@@ -21,8 +25,22 @@ body {
   color: white;
 }
 
+.buttonsParent {
+  float: left;
+}
+
+.buttonnext {
+  float: right;
+  border: 1px solid black;
+}
+
+.buttonprev {
+  float: right;
+  border: 1px solid black;
+}
+
 .card {
-  width: 80%;
+  width: 90%;
   margin: 0 auto; /* Added */
   float: none; /* Added */
   margin-bottom: 50px; /* Added */
