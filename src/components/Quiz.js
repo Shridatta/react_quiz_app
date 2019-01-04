@@ -16,19 +16,21 @@ import axios from "axios";
 
 class Quiz extends Component {
   componentWillMount() {
-    axios.get("https://ancient-sierra-53701.herokuapp.com/").then(response => {
-      let data = response.data;
-      let quizState = {
-        questions: data.questions.slice(),
-        config: data,
-        initializedQuestions: {},
-        currentQuestion: 0,
-        isStartedOver: true,
-        answeredQuestions: [-1],
-        isSummaryShown: false
-      };
-      this.props.updateQuestions(quizState.questions);
-    });
+    axios
+      .get("https://shridatta-quiz-express-backend.herokuapp.com/")
+      .then(response => {
+        let data = response.data;
+        let quizState = {
+          questions: data.questions.slice(),
+          config: data,
+          initializedQuestions: {},
+          currentQuestion: 0,
+          isStartedOver: true,
+          answeredQuestions: [-1],
+          isSummaryShown: false
+        };
+        this.props.updateQuestions(quizState.questions);
+      });
   }
   render() {
     let content;
