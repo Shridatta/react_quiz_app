@@ -9,6 +9,7 @@ import { Redirect, Route, Router } from "react-router-dom";
 import createHistory from "history/createBrowserHistory";
 import * as serviceWorker from "./serviceWorker";
 import ApplicationContainer from "./containers/ApplicationContainer";
+import axios from "axios";
 
 const history = createHistory();
 const middleware = [thunkMiddleware];
@@ -25,6 +26,13 @@ const enhancer = composeEnhancers(
   // other store enhancers if any
 );
 const store = createStore(storeApp, enhancer);
+
+/*asyncFunc().then(data => {
+  var newdata = data.data;
+  });
+
+console.log(newdata);
+//console.log(newdata); */
 
 const render = Component => {
   ReactDOM.render(

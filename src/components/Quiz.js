@@ -12,8 +12,24 @@ import { goToPrevQuestion, initializeQuestions } from "../actions";
 import { Redirect } from "react-router-dom";
 import SummaryContainer from "../containers/SummaryContainer";
 import QuestionContainer from "../containers/QuestionContianer";
+import axios from "axios";
 
 class Quiz extends Component {
+  componentWillMount() {
+    axios.get("http://localhost:5000").then(response => {
+      let data = response.data;
+      let quizState = {
+        questions: data.questions.slice(),
+        config: data,
+        initializedQuestions: {},
+        currentQuestion: 0,
+        isStartedOver: true,
+        answeredQuestions: [-1],
+        isSummaryShown: false
+      };
+      this.props.updateQuestions(quizState.questions);
+    });
+  }
   render() {
     let content;
     var parentcard = {
@@ -71,6 +87,7 @@ class Quiz extends Component {
     );
 
     if (
+      this.props.questions &&
       this.props.currentQuestion + 1 === this.props.questions.length &&
       this.props.answeredQuestions.length === this.props.questions.length
     ) {

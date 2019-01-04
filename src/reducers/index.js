@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import axios from "axios";
 import {
   ANSWER_THE_QUESTION,
   GO_TO_NEXT_QUESTION,
@@ -9,18 +10,38 @@ import {
   UPDATE_QUESTIONS,
   IS_SUMMARY_SHOWN
 } from "../actions/index";
-import config from "../quiz-data.json";
+//import Axios from "axios";
+//import config from "../quiz-data.json";
+
 //import {IS_SUMMARY_SHOWN} from "../actions";
+//let config = fetch("http://localhost:5000/", { mode: "cors" })
+//  .then(data => {
+//    return data.json();
+//  })
+//  .then(a => {
+//    console.log(a);
+//    return a;
+//  });
 
 const quizInitialState = {
-  questions: config.questions.slice(),
-  config,
+  questions: [],
+  config: {},
   initializedQuestions: {},
   currentQuestion: 0,
   isStartedOver: true,
   answeredQuestions: [-1],
   isSummaryShown: false
 };
+
+//const quizInitialState = {
+//  questions: config.questions,
+//  config: config,
+//  initializedQuestions: {},
+//  currentQuestion: 0,
+//  isStartedOver: true,
+//  answeredQuestions: [-1],
+//  isSummaryShown: false
+//};
 
 function Quiz(state = quizInitialState, action) {
   switch (action.type) {

@@ -14,20 +14,22 @@ class Question extends Component {
     this.props.goToNextQuestion();
   }
   renderOptions() {
-    const optionList = this.props.questions[
-      this.props.currentQuestion
-    ].options.map((option, index) => {
-      return (
-        <Option
-          key={index}
-          label={option.label}
-          onClick={() => {
-            this.handleClick(index);
-          }}
-        />
-      );
-    });
-    return optionList;
+    if (this.props.questions[this.props.currentQuestion]) {
+      const optionList = this.props.questions[
+        this.props.currentQuestion
+      ].options.map((option, index) => {
+        return (
+          <Option
+            key={index}
+            label={option.label}
+            onClick={() => {
+              this.handleClick(index);
+            }}
+          />
+        );
+      });
+      return optionList;
+    }
   }
   render() {
     var parentcard = {
@@ -38,7 +40,11 @@ class Question extends Component {
       <div className="card" id="parent-card" style={parentcard}>
         <div className="card-header">
           <ul className="list-group list-group-flush">
-            <li>{this.props.questions[this.props.currentQuestion].label}</li>
+            <li>
+              {this.props.questions &&
+                this.props.questions[this.props.currentQuestion] &&
+                this.props.questions[this.props.currentQuestion].label}
+            </li>
           </ul>
         </div>
         {this.renderOptions()}
