@@ -16,7 +16,7 @@ import axios from "axios";
 
 class Quiz extends Component {
   componentWillMount() {
-    axios.get("http://localhost:5000").then(response => {
+    axios.get("https://ancient-sierra-53701.herokuapp.com/").then(response => {
       let data = response.data;
       let quizState = {
         questions: data.questions.slice(),

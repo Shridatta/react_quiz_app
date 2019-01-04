@@ -84,6 +84,4 @@ app.get("/", function(req, res) {
   res.json(config);
 });
 
-app.listen(5000, function() {
-  console.log("server started on Port 5000...");
-});
+app.listen(process.env.PORT || 8080, () => console.log("listening"));
